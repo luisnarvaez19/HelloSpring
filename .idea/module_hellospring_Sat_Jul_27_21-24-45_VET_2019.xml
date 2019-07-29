@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_hellospring" default="compile.module.hellospring">
+  <dirname property="module.hellospring.basedir" file="${ant.file.module_hellospring}"/>
+  
+  <property name="module.jdk.home.hellospring" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.hellospring" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.hellospring" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.hellospring" value="-encoding UTF-8 -source 12 -target 12 ${compiler.args}"/>
+  
+  <property name="hellospring.output.dir" value="${module.hellospring.basedir}/../../../../../../J2EE/workspaces/Jasper/HelloSpring/build/web/WEB-INF/classes/production/HelloSpring"/>
+  <property name="hellospring.testoutput.dir" value="${module.hellospring.basedir}/../../../../../../J2EE/workspaces/Jasper/HelloSpring/build/web/WEB-INF/classes/test/HelloSpring"/>
+  
+  <path id="hellospring.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="hellospring.module.production.classpath">
+    <path refid="${module.jdk.classpath.hellospring}"/>
+    <path refid="library.spring-4.3.18.release.classpath"/>
+    <path refid="library.aopalliance-1.0.classpath"/>
+  </path>
+  
+  <path id="hellospring.runtime.production.module.classpath">
+    <pathelement location="${hellospring.output.dir}"/>
+    <path refid="library.spring-4.3.18.release.classpath"/>
+    <path refid="library.aopalliance-1.0.classpath"/>
+  </path>
+  
+  <path id="hellospring.module.classpath">
+    <path refid="${module.jdk.classpath.hellospring}"/>
+    <pathelement location="${hellospring.output.dir}"/>
+    <path refid="library.spring-4.3.18.release.classpath"/>
+    <path refid="library.aopalliance-1.0.classpath"/>
+  </path>
+  
+  <path id="hellospring.runtime.module.classpath">
+    <pathelement location="${hellospring.testoutput.dir}"/>
+    <pathelement location="${hellospring.output.dir}"/>
+    <path refid="library.spring-4.3.18.release.classpath"/>
+    <path refid="library.aopalliance-1.0.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.hellospring">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.hellospring">
+    <patternset refid="excluded.from.module.hellospring"/>
+  </patternset>
+  
+  
+  <target name="compile.module.hellospring" depends="compile.module.hellospring.production,compile.module.hellospring.tests" description="Compile module HelloSpring"/>
+  
+  <target name="compile.module.hellospring.production" depends="register.custom.compilers" description="Compile module HelloSpring; production classes"/>
+  
+  <target name="compile.module.hellospring.tests" depends="register.custom.compilers,compile.module.hellospring.production" description="compile module HelloSpring; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.hellospring" description="cleanup module">
+    <delete dir="${hellospring.output.dir}"/>
+    <delete dir="${hellospring.testoutput.dir}"/>
+  </target>
+</project>
